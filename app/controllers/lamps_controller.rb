@@ -14,6 +14,29 @@ class LampsController < ApplicationController
     end
   end
 
+  def new
+  end
+
+  def update
+  end
+
+  #  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Ne+pzLuT5Weuvy9EzWIxsnhbmXa98pfECUatqb08hFc=", "latitude"=>"37.54672097184719", "longitude"=>"-122.30160713195801", "commit"=>"Save"}
+  def create
+    lamp = Lamp.create!(lamp_params)
+    redirect_to lamp_path(lamp)
+  end
+
+  def delete
+    lamp = Lamp.find(params[:id])
+    lamp.destroy!
+    redirect_to :index
+  end
+
+  def show
+    @lamp = Lamp.find(params[:id])
+    render json: @lamp
+  end
+
   private
 
   def create_search_query
@@ -29,6 +52,10 @@ class LampsController < ApplicationController
       values.unshift(where_clause.join(' AND '))
     end
     values
+  end
+
+  def lamp_params
+    params.require(:lamp).permit(:name, :latitude, :longitude)
   end
 
 

@@ -1,0 +1,43 @@
+ <style>
+  #map {
+    height: 300px;
+    width: 75%;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  #saveForm {
+    margin-top: 10px;
+  }
+</style>
+
+<div class="layoutBanner">
+  <h1>Fancy Placement Tool</h1>
+</div>
+
+<div id="map"></div>
+<div id="saveForm">
+  <%= form_tag('/lamps') do %>
+    Latitude: <%= text_field_tag 'lamp[latitude]', nil, readonly: true %></br>
+    Longitude: <%= text_field_tag 'lamp[longitude]', nil, readonly: true %></br>
+    Enter Lamp Post Name: <%= text_field_tag 'lamp[name]', nil%></br>
+    <%= submit_tag "Save" %>
+  <% end -%>
+</div>
+
+<script>
+  var map;
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 37.54596389579989, lng: -122.29019165039062},
+      zoom: 15
+    });
+
+    google.maps.event.addListener(map, 'click', function(e) {
+      $('#lamp_latitude').val(e.latLng.lat());
+      $('#lamp_longitude').val(e.latLng.lng());
+    });
+  }
+</script>
+
+<%= javascript_include_tag '//maps.google.com/maps/api/js?v=3.30&callback=initMap' %>
