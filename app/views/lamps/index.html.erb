@@ -3,8 +3,8 @@
 Filter by:
 
 <form action="/lamps" method="get">
-  Name: <input type="text" name="name"><br>
-  Status: <select name="status">
+  Name: <input type="text" name="name" id="name-filter"><br>
+  Status: <select name="status" id="status-filter">
     <% Lamp::STATUS_NAMES.each do |label, value| %>
       <option value="<%= value %>"><%= label %></option>
     <% end %>
@@ -26,3 +26,23 @@ Filter by:
 <% end %>
 
 <%= link_to "Create New", new_lamp_path %>
+
+<script type="text/javascript">
+
+  function getUrlVars() { //taken from stackoverflow
+      var vars = [], hash;
+      var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+      for(var i = 0; i < hashes.length; i++)
+      {
+          hash = hashes[i].split('=');
+          vars.push(hash[0]);
+          vars[hash[0]] = hash[1];
+      }
+      return vars;
+  }
+  $(document).ready(function(){
+    var query = getUrlVars();
+    $('#name-filter').val(query.name);
+    $('#status-filter').val(query.status);
+  });
+</script>
