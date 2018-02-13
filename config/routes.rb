@@ -54,5 +54,5 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :lamps, only: [:index, :new, :create, :update, :delete, :show]
+  resources :lamps, only: [:index, :new, :create, :update, :destroy, :show]
 end

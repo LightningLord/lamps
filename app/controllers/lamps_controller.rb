@@ -9,7 +9,7 @@ class LampsController < ApplicationController
       @lamps = Lamp.all
     end
     respond_to do |format|
-      format.html # index.html.erb
+      # format.html # index.html.erb
       format.json { render json: @lamps}
     end
   end
@@ -18,18 +18,20 @@ class LampsController < ApplicationController
   end
 
   def update
+    lamp = Lamp.find(params[:id])
+    lamp.update_attributes(lamp_params)
+    redirect_to lamp_path(lamp)
   end
 
-  #  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Ne+pzLuT5Weuvy9EzWIxsnhbmXa98pfECUatqb08hFc=", "latitude"=>"37.54672097184719", "longitude"=>"-122.30160713195801", "commit"=>"Save"}
   def create
     lamp = Lamp.create!(lamp_params)
     redirect_to lamp_path(lamp)
   end
 
-  def delete
+  def destroy
     lamp = Lamp.find(params[:id])
     lamp.destroy!
-    redirect_to :index
+    redirect_to lamps_path
   end
 
   def show
@@ -55,7 +57,7 @@ class LampsController < ApplicationController
   end
 
   def lamp_params
-    params.require(:lamp).permit(:name, :latitude, :longitude)
+    params.require(:lamp).permit(:name, :latitude, :longitude, :status)
   end
 
 
