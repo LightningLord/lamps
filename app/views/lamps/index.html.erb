@@ -1,15 +1,27 @@
 <h1>Lamp Posts</h1>
 
+Filter by:
+
+<form action="/lamps" method="get">
+  Name: <input type="text" name="name"><br>
+  Status: <select name="status">
+    <% Lamp::STATUS_NAMES.each do |label, value| %>
+      <option value="<%= value %>"><%= label %></option>
+    <% end %>
+  </select>
+  <button type="submit">Filter</button>
+</form>
+<%= link_to "Reset Filters", lamps_path %>
 <% @lamps.each do |lamp| %>
-  <div class="lamp-form" style="border: 1px solid black; margin:10px">
+  <div class="lamp-form" style="border: 1px solid black; margin:10px; padding: 2px">
     <%= form_for lamp  do |f|%>
       Name: <%= f.text_field :name %><br>
       Latitude: <%= f.text_field :latitude %><br>
       Longitude: <%= f.text_field :longitude %><br>
       Status: <%= f.select :status, Lamp::STATUS_NAMES %><br>
       <%= f.submit "Update" %><br>
-      <%= button_to "Delete", lamp_path(id: lamp.id), :method => :delete %>
     <% end %>
+    <%= button_to "Delete", lamp_path(id: lamp.id), :method => :delete %>
   </div>
 <% end %>
 
