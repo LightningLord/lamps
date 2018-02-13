@@ -1,0 +1,16 @@
+<h1>Lamp Posts</h1>
+
+<% @lamps.each do |lamp| %>
+  <div class="lamp-form" style="border: 1px solid black; margin:10px">
+    <%= form_for lamp  do |f|%>
+      Name: <%= f.text_field :name %><br>
+      Latitude: <%= f.text_field :latitude %><br>
+      Longitude: <%= f.text_field :longitude %><br>
+      Status: <%= f.select :status, Lamp::STATUS_NAMES %><br>
+      <%= f.submit "Update" %><br>
+      <%= button_to "Delete", lamp_path(id: lamp.id), :method => :delete %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= link_to "Create New", new_lamp_path %>

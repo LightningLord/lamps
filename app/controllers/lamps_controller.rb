@@ -9,7 +9,7 @@ class LampsController < ApplicationController
       @lamps = Lamp.all
     end
     respond_to do |format|
-      # format.html # index.html.erb
+      format.html # index.html.erb
       format.json { render json: @lamps}
     end
   end
@@ -20,12 +20,19 @@ class LampsController < ApplicationController
   def update
     lamp = Lamp.find(params[:id])
     lamp.update_attributes(lamp_params)
-    redirect_to lamp_path(lamp)
+    respond_to do |format|
+      format.html {redirect_to lamps_path}
+      format.json {redirect_to lamp_path(lamp)}
+    end
+
   end
 
   def create
     lamp = Lamp.create!(lamp_params)
-    redirect_to lamp_path(lamp)
+    respond_to do |format|
+      format.html {redirect_to lamps_path}
+      format.json {redirect_to lamp_path(lamp)}
+    end
   end
 
   def destroy
